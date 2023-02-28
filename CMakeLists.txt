@@ -3,4 +3,4 @@ project(Labs_secondsemest C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Labs_secondsemest src/Lab№1/Source.c.c src/Lab№1/Header.h src/Lab№1/Func.c)
+add_executable(Labs_secondsemest src/Lab№1/Source.c src/Lab№1/Header.h src/Lab№1/Func.c)

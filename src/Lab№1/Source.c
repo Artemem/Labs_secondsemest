@@ -2,37 +2,36 @@
 #include <stdlib.h>
 #include "Header.h"
 #include <locale.h>
-
 int main()
 {
 	setlocale(LC_ALL, "Rus");
 	int n = quantity_of_bicycles();
 	struct bicycle* catalog = memory_catalog(&n);
-	enter_mas_structure(&n, catalog);
+	enter_mas_structure(n, catalog);
 	int choice_task = 0, go_choice = 0;
 	void (**menu)() = NULL;
-	menu = (void(**)(struct bicycle *mas,int* n))calloc(4, sizeof(void(*)(struct bicycle* catalog, int* n)));
+	menu = (void(**)(struct bicycle *mas,int* n))calloc(5, sizeof(void(*)(struct bicycle* catalog, int* n)));
 	if (menu != NULL)
 	{
-		menu[0] = show_cat;
-		menu[1] = del_struct;
-		menu[2] = sort_1_field;
-		menu[3] = sort_2_field;
+		menu[0] = &show_cat;
+		menu[1] = &del_struct;
+		menu[2] = &sort_1_field;
+		menu[3] = &sort_2_field;
 		do
 		{
-			printf("\n\n\nМеню функций:\n1.Вывести католог.\n2.Удалить структуру.\n3.Отсортировать массив стрктур по одному полю\n4.Отсортировать массив стрктур по двум полям\\Если вы захотите закончить работу, то введите цифру <5>\n\nВыберите задание:");
+			printf("\n\n\nРњРµРЅСЋ С„СѓРЅРєС†РёР№:\n1.Р’С‹РІРµСЃС‚Рё РєР°С‚РѕР»РѕРі.\n2.РЈРґР°Р»РёС‚СЊ СЃС‚СЂСѓРєС‚СѓСЂСѓ.\n3.РћС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РјР°СЃСЃРёРІ СЃС‚СЂРєС‚СѓСЂ РїРѕ РѕРґРЅРѕРјСѓ РїРѕР»СЋ\n4.РћС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РјР°СЃСЃРёРІ СЃС‚СЂРєС‚СѓСЂ РїРѕ РґРІСѓРј РїРѕР»СЏРј\\Р•СЃР»Рё РІС‹ Р·Р°С…РѕС‚РёС‚Рµ Р·Р°РєРѕРЅС‡РёС‚СЊ СЂР°Р±РѕС‚Сѓ, С‚Рѕ РІРІРµРґРёС‚Рµ С†РёС„СЂСѓ <5>\n\nР’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°РЅРёРµ:");
 			check_choice_task(&choice_task);
 			if (choice_task == 5)
 				return 0;
 			system("cls");
-			printf("%d задача.\n\n", choice_task);
+			printf("%d Р·Р°РґР°С‡Р°.\n\n", choice_task);
 			menu[choice_task - 1](catalog, &n);
-			printf("\n\nХочешь вернуться в меню?\n1-Да\n2-Нет\n\nОтвет:");
+			printf("\n\nРҐРѕС‡РµС€СЊ РІРµСЂРЅСѓС‚СЊСЃСЏ РІ РјРµРЅСЋ?\n1-Р”Р°\n2-РќРµС‚\n\nРћС‚РІРµС‚:");
 			check_go_choice(&go_choice);
 			system("cls");
 		} while (go_choice == 1);
 		return 0;
 	}
-	free_struct(&n, &catalog);
+	free_struct(n, &catalog);
 	free(menu);
 }

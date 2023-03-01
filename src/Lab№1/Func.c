@@ -133,6 +133,7 @@ void del(struct bicycle** mas, int x, int* n)
 	{
 		*mas = store;
 	}
+	free(*mas);
 }
 void sort_1_field(struct bicycle* mas, int* n)
 {

@@ -34,9 +34,9 @@ int main()
 			printf("\n\nХочешь вернуться в меню?\n1-Да\n2-Нет\n\nОтвет:");
 			check_go_choice(&go_choice);
 			system("cls");
+			free(menu);
 		} while (go_choice == 1);
 		return 0;
-		free(menu);
 	}
 	free_struct(n, &catalog);
 	free(menu);

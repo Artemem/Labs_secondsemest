@@ -27,9 +27,9 @@ int quantity_of_bicycles()
     }
     return n;
 }
-struct bicycle* memory_catalog(int *n)
+struct bicycle* memory_catalog(int n)
 {
-    struct bicycle*mas= (struct bicycle*)calloc(*n, sizeof(struct bicycle));
+    struct bicycle*mas= (struct bicycle*)calloc(n, sizeof(struct bicycle));
 	return mas;
 }
 void enter_mas_structure(int n, struct bicycle* mas)
@@ -58,11 +58,12 @@ void checker(struct bicycle* mas, int i, int k)
 	if (k == 2)
 	{
 		mas[i].colour = (char*)calloc(1024, sizeof(char));
-		while (strlen(gets_s(mas[i].colour, 1024 * sizeof(char)))<1)
+		do
 		{
-			printf("Ошибка. Попробуй снова\nВведите цвет %d велосипеда:", i + 1);
+			printf("Введите цвет %d велосипеда:", i + 1);
 			rewind(stdin);
-		}
+			gets_s(mas[i].colour, 20 * sizeof(char));
+		} while (strlen(mas[i].colour) < 3);
 	}
 	if (k == 3)
 	{
@@ -193,7 +194,7 @@ int variants(int ch_1, int flag, struct bicycle* mas)
 		return 3;
 	}
 }
-int text_check(char* const mas_1, char const* mas_2)
+int text_check(const char* mas_1, char const* mas_2)
 {
 	if (strcmp(mas_1,mas_2)>0)
 		return 1;

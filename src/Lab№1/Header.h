@@ -1,7 +1,7 @@
 #pragma once
 int quantity_of_bicycles();
 struct bicycle* catalog;
-struct bicycle* memory_catalog(int* n);
+struct bicycle* memory_catalog(int n);
 void enter_mas_structure(int n, struct bicycle* mas);
 void show_cat(struct bicycle const* mas, int* n);
 void del_struct(struct bicycle* mas, int* n);

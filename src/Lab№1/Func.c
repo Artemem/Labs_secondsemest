@@ -58,7 +58,7 @@ void checker(struct bicycle* mas, int i, int k)
 	if (k == 2)
 	{
 		mas[i].colour = (char*)calloc(1024, sizeof(char));
-		while (getchar()=='\n' || strlen(gets_s(mas[i].colour, 1024 * sizeof(char)))<3)
+		while (strlen(gets_s(mas[i].colour, 1024 * sizeof(char)))<1)
 		{
 			printf("Ошибка. Попробуй снова\nВведите цвет %d велосипеда:", i + 1);
 			rewind(stdin);
@@ -89,15 +89,15 @@ void check_go_choice(int* ch)
 		rewind(stdin);
 	}
 }
-void show_cat(struct bicycle const* mas, int const* n)
+void show_cat(const struct bicycle* mas,const int* n)
 {
 	printf("Каталог:\n\nКласс:\t\t\tГод:\t\tЦвет:\n");
-	const char* ForWhat[] = { "Горный", "Трюковой", "Городской", "Гибридный" }; //"Горный", "Трюковой", "Городской", "Гибридный"
+	const static char* ForWhat[] = { "Горный", "Трюковой", "Городской", "Гибридный" }; //"Горный", "Трюковой", "Городской", "Гибридный"
 	for (int i = 0; i < *n; i++)
 	{
 		//printf("%d. %s\t\t%d\t\t",i+1, ForWhat[mas[i].class], mas[i].year);
 		printf("%d. ", i + 1);
-		printf("%s",ForWhat[mas[i].class]);
+		fputs(ForWhat[mas[i].class], stdout);
 		printf("\t\t%d\t\t", mas[i].year);
 		fputs(mas[i].colour, stdout);
 		printf("\n");
@@ -122,15 +122,15 @@ void check_del_str(int* x, int n)
 }
 void del(struct bicycle** mas, int x, int* n)
 {
-	for (int i = x-1; i < *n; i++)
+	for (int i = x; i < *n; i++)
 	{
 		*(*mas + i - 1) = *(*mas + i);
 	}
 	(*n)--;
-	struct bicycle* storer = (struct bicycle*)realloc(*mas, (*n) * sizeof(struct bicycle));
-	if (storer != NULL)
+	struct bicycle* store = (struct bicycle*)realloc(*mas, (*n) * sizeof(struct bicycle));
+	if (store != NULL)
 	{
-		*mas = storer;
+		*mas = store;
 	}
 }
 void sort_1_field(struct bicycle* mas, int* n)

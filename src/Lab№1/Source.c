@@ -6,9 +6,10 @@ int main()
 {
 	setlocale(LC_ALL, "Rus");
 	int n = quantity_of_bicycles();
+	int choice_task = 0;
+    int go_choice = 0;
 	struct bicycle* catalog = memory_catalog(&n);
 	enter_mas_structure(n, catalog);
-	int choice_task = 0, go_choice = 0;
 	void (**menu)() = NULL;
 	menu = (void(**)(struct bicycle *mas,int* n))calloc(5, sizeof(void(*)(struct bicycle* catalog, int* n)));
 	if (menu != NULL)

@@ -9,10 +9,10 @@ int main()
 	int n = quantity_of_bicycles();
 	int choice_task = 0;
     int go_choice = 0;
+	void (**menu)() = NULL;
+	menu = (void(**)(struct bicycle* mas, int* n))calloc(5, sizeof(void(*)(struct bicycle* catalog, int* n)));
 	struct bicycle* catalog = memory_catalog(n);
 	enter_mas_structure(n, catalog);
-	void (**menu)() = NULL;
-	menu = (void(**)(struct bicycle *mas,int* n))calloc(5, sizeof(void(*)(struct bicycle* catalog, int* n)));
 	if (menu != NULL)
 	{
 		menu[0] = &show_cat;
@@ -36,6 +36,7 @@ int main()
 			system("cls");
 		} while (go_choice == 1);
 		return 0;
+		free(menu);
 	}
 	free_struct(n, &catalog);
 	free(menu);

@@ -38,7 +38,7 @@ void enter_mas_structure(int n, struct bicycle* mas)
 	{
 		printf("\nВведите год выпуска %d велосипеда:", i + 1);
 		checker(mas, i, 1);
-		printf("Введите цвет %d велосипеда:", i + 1);
+		//printf("Введите цвет %d велосипеда:", i + 1);
 		checker(mas, i, 2);
 		printf("Введите код класса %d велосипеда (Горный[1], Трюковой[2], Городской[3], Гибридный[4]):", i + 1);
 		checker(mas, i, 3);
@@ -76,7 +76,7 @@ void checker(struct bicycle* mas, int i, int k)
 }
 void check_choice_task(int* ch)
 {
-	while (scanf_s("%d", ch) != 1 || *ch != 1 && *ch != 2 && *ch != 3 || getchar() != '\n')
+	while (scanf_s("%d", ch) != 1 || *ch != 1 && *ch != 2 && *ch != 3 && *ch !=4 && *ch!=5|| getchar() != '\n')
 	{
 		printf("Ошибка.Попробуй снова\nВыберите задание:");
 		rewind(stdin);

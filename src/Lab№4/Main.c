@@ -12,7 +12,7 @@ int main()
     errno_t err1 = fopen_s(&data, "data.txt", "r+");
     if (err1 != 0)
     {
-        printf("Нельзя открыть файл");
+        printf("ГЌГҐГ«ГјГ§Гї Г®ГІГЄГ°Г»ГІГј ГґГ Г©Г«");
         return(1);
     }
     tree* head = NULL;
@@ -23,16 +23,15 @@ int main()
     do 
     {
         start_to_question(&head);
-        printf("\n\nХочешь попробовать ещё раз?\n");
+        printf("\n\nГ•Г®Г·ГҐГёГј ГЇГ®ГЇГ°Г®ГЎГ®ГўГ ГІГј ГҐГ№Вё Г°Г Г§?\n");
         check_go_choice(&go_choice);
         system("cls");
     } while (go_choice == 1);
-    /*show_tree(head);*/
     FILE* new_data;
     errno_t err2 = fopen_s(&new_data, "data.txt", "w+");
     if (err2 != 0)
     {
-        printf("Нельзя открыть файл");
+        printf("ГЌГҐГ«ГјГ§Гї Г®ГІГЄГ°Г»ГІГј ГґГ Г©Г«");
         return(1);
     }
     tree_to_new_data(new_data, head);

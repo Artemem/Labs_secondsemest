@@ -1,75 +1,62 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "Header.h"
-#include <string.h>
-#include <locale.h>
-struct bicycle
-{
-	int year;
-	char *colour;
-	enum tip class;
-};
-enum tip
-{
-	MOUNTAIN=0,
-	STUNT,
-	URBAN,
-	HYBRID
-};
 int quantity_of_bicycles()
 {
     int n = 0;
-	printf("Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РІРµР»РѕСЃРёРїРµРґРѕРІ:");
+	printf("Введите кол-во велосипедов:");
     while ((scanf_s("%d", &n)) != 1|| getchar() != '\n')
     {
-        printf("РћС€РёР±РєР°.РџРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°\nР’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ РІРµР»РѕСЃРёРїРµРґРѕРІ:");
+        printf("Ошибка.Попробуй снова\nВведите кол-во велосипедов:");
         rewind(stdin);
     }
     return n;
 }
-struct bicycle* memory_catalog(int n)
+bicycle* memory_catalog(int n)
 {
-    struct bicycle*mas= (struct bicycle*)calloc(n, sizeof(struct bicycle));
+    bicycle*mas= (struct bicycle*)calloc(n, sizeof(bicycle));
 	return mas;
 }
-void enter_mas_structure(int n, struct bicycle* mas)
+void enter_mas_structure(int n, bicycle* mas)
 {
 	for (int i = 0; i < n; i++)
 	{
-		printf("\nР’РІРµРґРёС‚Рµ РіРѕРґ РІС‹РїСѓСЃРєР° %d РІРµР»РѕСЃРёРїРµРґР°:", i + 1);
+		printf("\nВведите год выпуска %d велосипеда:", i + 1);
 		checker(mas, i, 1);
-		//printf("Р’РІРµРґРёС‚Рµ С†РІРµС‚ %d РІРµР»РѕСЃРёРїРµРґР°:", i + 1);
+		//printf("Введите цвет %d велосипеда:", i + 1);
 		checker(mas, i, 2);
-		printf("Р’РІРµРґРёС‚Рµ РєРѕРґ РєР»Р°СЃСЃР° %d РІРµР»РѕСЃРёРїРµРґР° (Р“РѕСЂРЅС‹Р№[0], РўСЂСЋРєРѕРІРѕР№[1], Р“РѕСЂРѕРґСЃРєРѕР№[2], Р“РёР±СЂРёРґРЅС‹Р№[3]):", i + 1);
+		printf("Введите код класса %d велосипеда (Горный[0], Трюковой[1], Городской[2], Гибридный[3]):", i + 1);
 		checker(mas, i, 3);
 	}
 }
 
-void checker(struct bicycle* mas, int i, int k)
+void checker(bicycle* mas, int i, int k)
 {
 	if (k == 1)
 	{
 		while ((scanf_s("%d", &mas[i].year)) != 1 || mas[i].year>2024 || mas[i].year < 2010 || getchar() != '\n')
 		{
-			printf("РћС€РёР±РєР°. РџРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°\nР’РІРµРґРёС‚Рµ РіРѕРґ РІС‹РїСѓСЃРєР° %d РІРµР»РѕСЃРёРїРµРґР°:", i+1);
+			printf("Ошибка. Попробуй снова\nВведите год выпуска %d велосипеда:", i+1);
 			rewind(stdin);
 		}
 	}
 	if (k == 2)
 	{
 		mas[i].colour = (char*)calloc(1024, sizeof(char));
-		do
+		if (mas[i].colour == NULL)
 		{
-			printf("Р’РІРµРґРёС‚Рµ С†РІРµС‚ %d РІРµР»РѕСЃРёРїРµРґР°:", i + 1);
+			exit(-1);
+		}
+		printf("Введите цвет %d велосипеда:", i + 1);
+		while(scanf_s("%s", mas[i].colour, 1024) != 1 || strlen(mas[i].colour) < 3)
+		{
+			printf("Ошибка! Попробуйте снова!\nВведите цвет %d велосипеда:", i + 1);
 			rewind(stdin);
-			gets_s(mas[i].colour, 20 * sizeof(char));
-		} while (strlen(mas[i].colour) < 3);
+		}
 	}
 	if (k == 3)
 	{
 		while ((scanf_s("%d", &mas[i].class)) < 1 || mas[i].class != 0 && mas[i].class != 1 && mas[i].class != 2 && mas[i].class != 3 || getchar() != '\n')
 		{
-			printf("РћС€РёР±РєР°.РџРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°\nР’РІРµРґРёС‚Рµ РєРѕРґ РєР»Р°СЃСЃР° %d РІРµР»РѕСЃРёРїРµРґР° (Р“РѕСЂРЅС‹Р№[0], РўСЂСЋРєРѕРІРѕР№[1], Р“РѕСЂРѕРґСЃРєРѕР№[2], Р“РёР±СЂРёРґРЅС‹Р№[3]):", i + 1);
+			printf("Ошибка.Попробуй снова\nВведите код класса %d велосипеда (Горный[0], Трюковой[1], Городской[2], Гибридный[3]):", i + 1);
 			rewind(stdin);
 		}
 	}
@@ -78,7 +65,7 @@ void check_choice_task(int* ch)
 {
 	while (scanf_s("%d", ch) != 1 || *ch != 1 && *ch != 2 && *ch != 3 && *ch !=4 && *ch!=5|| getchar() != '\n')
 	{
-		printf("РћС€РёР±РєР°.РџРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°\nР’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°РЅРёРµ:");
+		printf("Ошибка.Попробуй снова\nВыберите задание:");
 		rewind(stdin);
 	}
 }
@@ -86,14 +73,14 @@ void check_go_choice(int* ch)
 {
 	while (scanf_s("%d", ch) != 1 || *ch != 1 && *ch != 2 || getchar() != '\n')
 	{
-		printf("РћС€РёР±РєР°.РџРѕРїСЂРѕР±СѓР№ СЃРЅРѕРІР°\nРћС‚РІРµС‚:");
+		printf("Ошибка.Попробуй снова\nОтвет:");
 		rewind(stdin);
 	}
 }
-void show_cat(const struct bicycle* mas,const int* n)
+void show_cat(const bicycle* mas,const int* n)
 {
-	printf("РљР°С‚Р°Р»РѕРі:\n\nРљР»Р°СЃСЃ:\t\t\tР“РѕРґ:\t\tР¦РІРµС‚:\n");
-	const static char* ForWhat[] = { "Р“РѕСЂРЅС‹Р№", "РўСЂСЋРєРѕРІРѕР№", "Р“РѕСЂРѕРґСЃРєРѕР№", "Р“РёР±СЂРёРґРЅС‹Р№" }; //"Р“РѕСЂРЅС‹Р№", "РўСЂСЋРєРѕРІРѕР№", "Р“РѕСЂРѕРґСЃРєРѕР№", "Р“РёР±СЂРёРґРЅС‹Р№"
+	printf("Каталог:\n\nКласс:\t\t\tГод:\t\tЦвет:\n");
+	const static char* ForWhat[] = { "Горный", "Трюковой", "Городской", "Гибридный" }; //"Горный", "Трюковой", "Городской", "Гибридный"
 	for (int i = 0; i < *n; i++)
 	{
 		printf("%d. ", i + 1);
@@ -103,9 +90,9 @@ void show_cat(const struct bicycle* mas,const int* n)
 		printf("\n");
 	}
 }
-void del_struct(struct bicycle* mas, int* n)
+void del_struct(bicycle* mas, int* n)
 {
-	printf("РљР°РєРѕР№ РІРµР»РѕСЃРёРїРµРґ РІС‹ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ?\n Р’Р°С€ РІС‹Р±РѕСЂ(1-%d)", *n);
+	printf("Какой велосипед вы хотите удалить?\n Ваш выбор(1-%d)", *n);
 	int x = 0;
 	check_del_str(&x, *n);
 	del(&mas, x, n);
@@ -116,26 +103,29 @@ void check_del_str(int* x, int n)
 {
 	while ((scanf_s("%d", x)) != 1 || *x < 1 || *x>n || getchar() != '\n')
 	{
-		printf("РћС€РёР±РєР°. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°\nР’Р°С€ РІС‹Р±РѕСЂ(1-%d)", n);
+		printf("Ошибка. Попробуйте снова\nВаш выбор(1-%d)", n);
 		rewind(stdin);
 	}
 }
-void del(struct bicycle** mas, int x, int* n)
+void del(bicycle** mas, int x, int* n)
 {
-	for (int i = x; i < *n; i++)
+	free((*mas+x-1)->colour);
+	int i = x;
+	while (i < *n)
 	{
 		*(*mas + i - 1) = *(*mas + i);
+		i++;
 	}
 	(*n)--;
-	struct bicycle* store = (struct bicycle*)realloc(*mas, (*n) * sizeof(struct bicycle));
+    bicycle* store = (bicycle*)realloc(*mas, (*n) * sizeof(bicycle));
 	if (store != NULL)
 	{
 		*mas = store;
 	}
 }
-void sort_1_field(struct bicycle* mas, int* n)
+void sort_1_field(bicycle* mas, int* n)
 {
-	printf("РџРѕ РєР°РєРѕРјСѓ РїР°СЂР°РјРµС‚СЂСѓ РІС‹ С…РѕС‚РёС‚Рµ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РєР°С‚Р°Р»РѕРі (РљР»Р°СЃСЃ[1], Р“РѕРґ[2], Р¦РІРµС‚[3])?\nР’Р°С€ РІС‹Р±РѕСЂ:");
+	printf("По какому параметру вы хотите отсортировать каталог (Класс[1], Год[2], Цвет[3])?\nВаш выбор:");
 	int ch_1 = 0;
 	check_choice_sort(&ch_1);
     sort_1(mas, *n, ch_1);
@@ -145,11 +135,11 @@ void check_choice_sort(int* ch)
 {
 	while ((scanf_s("%d", ch)) != 1 || *ch != 1 && *ch!=2 && *ch!=3 || getchar() != '\n')
 	{
-		printf("РћС€РёР±РєР°. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°\nР’Р°С€ РІС‹Р±РѕСЂ");
+		printf("Ошибка. Попробуйте снова\nВаш выбор");
 		rewind(stdin);
 	}
 }
-void sort_1(struct bicycle* mas,int n, int ch_1)
+void sort_1(bicycle* mas,int n, int ch_1)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -157,14 +147,14 @@ void sort_1(struct bicycle* mas,int n, int ch_1)
 		{
 			if (variants(ch_1, j, mas) == 1)
 			{
-				struct bicycle temp = mas[j];
+				bicycle temp = mas[j];
 				mas[j] = mas[j + 1];
 				mas[j + 1] = temp;
 			}
 		}
 	}
 }
-void sort_2(struct bicycle* mas, int n, int ch_1, int ch_2)
+void sort_2(bicycle* mas, int n, int ch_1, int ch_2)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -172,14 +162,14 @@ void sort_2(struct bicycle* mas, int n, int ch_1, int ch_2)
 		{
 		    if (variants(ch_1, j, mas) == 1 || (variants(ch_1, j, mas) == 2 && variants(ch_2, j, mas) == 1))
 		    {
-				struct bicycle temp = mas[j];
+				bicycle temp = mas[j];
 				mas[j] = mas[j + 1];
 				mas[j + 1] = temp;
 		    }
 		}
 	}
 }
-int variants(int ch_1, int flag, struct bicycle* mas)
+int variants(int ch_1, int flag, bicycle* mas)
 {
 	switch (ch_1)
 	{
@@ -209,13 +199,13 @@ int int_check(int a, int b)
 		return 2;
 	return 3;
 }
-void sort_2_field(struct bicycle* mas, int* n)
+void sort_2_field(bicycle* mas, int* n)
 {
-	printf("РџРѕ РєР°РєРёРј РґРІСѓРј РїР°СЂР°РјРµС‚СЂР°Рј РІС‹ С…РѕС‚РёС‚Рµ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РєР°С‚Р°Р»РѕРі (РљР»Р°СЃСЃ[1], Р“РѕРґ[2], Р¦РІРµС‚[3])?\n\nРџРµСЂРІС‹Р№ РїР°СЂР°РјРµС‚СЂ:");
+	printf("По каким двум параметрам вы хотите отсортировать каталог (Класс[1], Год[2], Цвет[3])?\n\nПервый параметр:");
 	int ch_1 = 0;
 	int	ch_2 = 0;
 	check_choice_sort(&ch_1);
-	printf("Р’С‚РѕСЂРѕР№ РїР°СЂР°РјРµС‚СЂ:");
+	printf("Второй параметр:");
 	check_2_choices_sort(ch_1, &ch_2);
 	sort_2(mas, *n, ch_1, ch_2);
 	system("cls");
@@ -226,12 +216,12 @@ void check_2_choices_sort(int const ch_1, int* ch_2)
 	while ((scanf_s("%d", ch_2)) != 1 || getchar() != '\n' || *ch_2 < 1 || *ch_2 > 3 || ch_1 == *ch_2)
 	{
 		if (ch_1 == *ch_2)
-			printf("Р”РІР° СЂР°Р·Р° РїРѕ РѕРґРЅРѕРјСѓ РїР°СЂР°РјРµС‚СЂСѓ РЅРµР»СЊР·СЏ СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ\n");
-		printf("Р’С‚РѕСЂРѕР№ РїР°СЂР°РјРµС‚СЂ:");
+			printf("Два раза по одному параметру нельзя сортировать\n");
+		printf("Второй параметр:");
 		rewind(stdin);
 	}
 }
-void free_struct(int const n, struct bicycle** mas)
+void free_struct(int const n, bicycle** mas)
 {
 
 	for (int i = 0; i < n; i++)

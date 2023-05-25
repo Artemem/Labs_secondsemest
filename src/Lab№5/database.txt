@@ -1,0 +1,7 @@
+bus.by IN A 213.24.62.128
+artem.top IN A 201.25.34.248
+artem2.top IN CNAME artem.top
+football.live IN A 214.32.7.86
+foot.run IN A 214.32.7.86
+bsuir.com IN A 234.212.54.45
+ksis.by IN A 154.64.78.167
